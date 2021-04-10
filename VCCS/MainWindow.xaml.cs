@@ -32,6 +32,7 @@ namespace VCCS
 		private DirectSoundOut waveOut;
 		private BufferedWaveProvider waveBuffer;
 		private WaveStream waveStream;
+		private WaveFormat waveFormat;
 
 		private TcpClient tcpClient;
 
@@ -48,19 +49,27 @@ namespace VCCS
 			Client.Connect();
 			Console.WriteLine("Connected");
 
+			waveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(0).Channels);
+
 			sourceStream = new WaveIn();
 			sourceStream.DeviceNumber = 0;
 			sourceStream.BufferMilliseconds = 10;
-			sourceStream.WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(0).Channels);
+			sourceStream.WaveFormat = waveFormat;
 			sourceStream.DataAvailable += sourceStream_DataAvailable;
 
-			//WaveInProvider waveIn = new WaveInProvider(sourceStream);
+			waveBuffer = new BufferedWaveProvider(waveFormat);
 
-			/*waveOut = new DirectSoundOut();
-			waveOut.Init(waveIn);
+			waveOut = new DirectSoundOut();
+			waveOut.Init(waveBuffer);
 
 			sourceStream.StartRecording();
-			waveOut.Play();*/
+
+			Client.OnVoiceReceived += (byte[] data) =>
+			{
+				//waveStream.Write(data, 0, data.Length);
+				waveBuffer.AddSamples(data, 0, data.Length);
+				waveOut.Play();
+			};
 
 			Client.OnConnectionSucceeded += () =>
 			{

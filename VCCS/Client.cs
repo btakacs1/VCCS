@@ -42,6 +42,7 @@ namespace VCCS
 		public static event Action<string> OnIncomingCallRemoved;
 		public static event Action<string> OnCallStarted;
 		public static event Action<string> OnCallEnded;
+		public static event Action<byte[]> OnVoiceReceived;
 
 		public static Dictionary<string, string> CallsignAliases = new Dictionary<string, string>
 		{
@@ -142,7 +143,7 @@ namespace VCCS
 
 		public static void ReceiveVoice(byte[] data, int length)
 		{
-			Console.WriteLine("Received voice");
+			OnVoiceReceived?.Invoke(data);
 		}
 
 		public static void ControllerButtonClicked(string callsign)
