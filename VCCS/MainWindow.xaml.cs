@@ -49,7 +49,7 @@ namespace VCCS
 			//Client.Connect();
 			//Console.WriteLine("Connected");
 
-			waveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(0).Channels);
+			waveFormat = new WaveFormat(20000, WaveIn.GetCapabilities(0).Channels);
 
 			sourceStream = new WaveIn();
 			sourceStream.DeviceNumber = 0;

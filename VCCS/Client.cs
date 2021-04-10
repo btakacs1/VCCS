@@ -12,12 +12,15 @@ namespace VCCS
 {
 	static class Client
 	{
+		public const int TCPPort = 3978;
+		public const int UDPPort = 3979;
+
 		private static string callsign = "ERROR";
 		private static TcpClient tcpClient;
 		private static UdpClient udpClient;
 		private static string serverIP;
 		
-		private static IPEndPoint addressUDP = new IPEndPoint(IPAddress.Any, 25596);
+		private static IPEndPoint addressUDP = new IPEndPoint(IPAddress.Any, UDPPort);
 
 		private static bool isSendingCall = false;
 		private static string sendingCallTo = "";
@@ -61,7 +64,7 @@ namespace VCCS
 			serverIP = File.ReadAllText("ServerIP.txt");
 			try
 			{
-				tcpClient.Connect(serverIP, 25596);
+				tcpClient.Connect(serverIP, TCPPort);
 			}
 			catch (SocketException)
 			{
@@ -72,7 +75,7 @@ namespace VCCS
 			SendNetworkMessage(new NetworkMessage_Callsign(NetworkMessage.HeaderConnect, callsign));
 
 			udpClient = new UdpClient();
-			udpClient.Connect(serverIP, 25596);
+			udpClient.Connect(serverIP, UDPPort);
 
 			IsConnected = true;
 			OnConnectionSucceeded?.Invoke();

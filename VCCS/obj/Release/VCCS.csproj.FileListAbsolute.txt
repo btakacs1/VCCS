@@ -33,3 +33,5 @@ C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Release\VCCS.csproj.CoreCompileInputs.ca
 C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Release\VCCS.csproj.CopyComplete
 C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Release\VCCS.exe
 C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Release\VCCS.pdb
+C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Release\ConnectDialog.g.cs
+C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Release\ConnectDialog.baml
