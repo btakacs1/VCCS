@@ -12,7 +12,7 @@ namespace VCCS
 {
 	static class Client
 	{
-		private static string callsign = "ERR";
+		private static string callsign = "ERROR";
 		private static TcpClient tcpClient;
 		private static UdpClient udpClient;
 		private static string serverIP;
@@ -25,6 +25,7 @@ namespace VCCS
 		private static string inCallWith = "";
 		private static List<string> incomingCalls = new List<string>();
 
+		public static bool IsConnected { get; private set; } = false;
 		public static Dispatcher Dispatcher { get; private set; }
 		public static string Callsign { get => callsign; }
 		public static bool RingOff { get; set; }
@@ -36,6 +37,8 @@ namespace VCCS
 
 		public static event Action OnConnectionSucceeded;
 		public static event Action OnConnectionFailed;
+		public static event Action OnConnected;
+		public static event Action OnDisconnected;
 		public static event Action<string> OnControllerConnected;
 		public static event Action<string> OnControllerDisconnected;
 		public static event Action<string> OnIncomingCallAdded;
@@ -50,8 +53,9 @@ namespace VCCS
 			{ "CYYZ_APP", "CYYZ_1_APP" }, { "TOR_CTR", "TOR_CE_CTR" }
 		};
 
-		public static void Connect()
+		public static void Connect(string callsign)
 		{
+			Client.callsign = callsign;
 			Dispatcher = Dispatcher.CurrentDispatcher;
 			tcpClient = new TcpClient();
 			serverIP = File.ReadAllText("ServerIP.txt");
@@ -64,21 +68,24 @@ namespace VCCS
 				OnConnectionFailed?.Invoke();
 				return;
 			}
-			callsign =
-#if DEBUG
-				"CYYZ_S_DEP";
-#else
-				"CYYZ_N_TWR";
-#endif
-			SendNetworkMessage(new NetworkMessage_Callsign(NetworkMessage.HeaderConnect, callsign));
 
-			OnConnectionSucceeded?.Invoke();
+			SendNetworkMessage(new NetworkMessage_Callsign(NetworkMessage.HeaderConnect, callsign));
 
 			udpClient = new UdpClient();
 			udpClient.Connect(serverIP, 25596);
 
+			IsConnected = true;
+			OnConnectionSucceeded?.Invoke();
+			OnConnected?.Invoke();
+
 			ReadNetworkStream();
 			ReadNetworkStreamUDP();
+		}
+
+		public static void Disconnect()
+		{
+			IsConnected = false;
+			OnDisconnected?.Invoke();
 		}
 
 		public static void ControllerConnected(string callsign)

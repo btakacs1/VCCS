@@ -1,0 +1,21 @@
+﻿<adonisControls:AdonisWindow x:Class="VCCS.ConnectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VCCS"
+	    xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+		xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        mc:Ignorable="d"
+        Title="Connect" Height="100" Width="230"
+	    TitleBarBackground="#222222">
+	<adonisControls:AdonisWindow.TitleBarContent>
+		<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Right">
+		</StackPanel>
+	</adonisControls:AdonisWindow.TitleBarContent>
+	<Grid>
+		<TextBox Name="CallsignField" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Top" Width="200" TextChanged="CallsignField_TextChanged" PreviewKeyDown="CallsignField_PreviewKeyDown"/>
+		<Button Name="ConnectButton" Content="Connect" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="200" Click="ConnectButton_Click"/>
+	</Grid>
+</adonisControls:AdonisWindow>

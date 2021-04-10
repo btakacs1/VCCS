@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\App.xaml
-11151548125
+2-1725276319
 
-92127188419
+10-532825586
 262017107933
-MainWindow.xaml;
+ConnectDialog.xaml;MainWindow.xaml;
 
-False
+True
 

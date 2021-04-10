@@ -33,3 +33,5 @@ C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\bin\Debug\Microsoft.Win32.Registry.xml
 C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\bin\Debug\NAudio.xml
 C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\bin\Debug\System.Security.AccessControl.xml
 C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Debug\ConnectDialog.g.cs
+C:\Users\Bence\Dev\VATCAN\VCCS\VCCS\obj\Debug\ConnectDialog.baml

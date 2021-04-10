@@ -44,10 +44,10 @@ namespace VCCS
 		public MainWindow()
 		{
 			InitializeComponent();
-
-			Console.WriteLine("Connecting");
-			Client.Connect();
-			Console.WriteLine("Connected");
+			
+			//Console.WriteLine("Connecting");
+			//Client.Connect();
+			//Console.WriteLine("Connected");
 
 			waveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(0).Channels);
 
@@ -71,14 +71,24 @@ namespace VCCS
 				waveOut.Play();
 			};
 
-			Client.OnConnectionSucceeded += () =>
+			Client.OnConnected += () =>
 			{
-				Display.Content = "CONNECTED";
+				Console.WriteLine("RECEIVED CONNECT");
+				ConnectButton.Content = Client.Callsign;
+				ConnectButton.SetResourceReference(BackgroundProperty, AdonisUI.Brushes.Layer1InteractionBrush);
 			};
 
-			Client.OnConnectionFailed += () =>
+			Client.OnDisconnected += () =>
 			{
-				Display.Content = "NO CONNECTION";
+				ConnectButton.Content = "CONNECT";
+				ConnectButton.SetResourceReference(BackgroundProperty, AdonisUI.Brushes.Layer1BackgroundBrush);
+				GetControllerButton(Client.Callsign).SetResourceReference(BackgroundProperty, AdonisUI.Brushes.Layer0BackgroundBrush);
+				ForEachControllerButton((Button button) =>
+				{
+					button.IsEnabled = false;
+					//button.SetResourceReference(BackgroundProperty, AdonisUI.Brushes.Layer0BackgroundBrush);
+					return false;
+				});
 			};
 
 			Client.OnControllerConnected += (string callsign) =>
@@ -217,11 +227,26 @@ namespace VCCS
 			{
 				ButtonMute.SetResourceReference(BackgroundProperty, AdonisUI.Brushes.Layer1InteractionBrush);
 				sourceStream.StopRecording();
+				Console.WriteLine("Muted");
 			}
 			else
 			{
 				ButtonMute.SetResourceReference(BackgroundProperty, AdonisUI.Brushes.Layer1BackgroundBrush);
 				sourceStream.StartRecording();
+				Console.WriteLine("Unmuted");
+			}
+		}
+
+		private void ConnectButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (Client.IsConnected)
+			{
+				Client.Disconnect();
+			}
+			else
+			{
+				ConnectDialog connectDialog = new ConnectDialog();
+				connectDialog.Show();
 			}
 		}
 	}

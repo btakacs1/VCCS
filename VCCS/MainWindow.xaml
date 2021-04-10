@@ -17,7 +17,7 @@
 	<Grid>
 		<StackPanel Name="StackVertical" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="750" Margin="0" Grid.RowSpan="5">
 			<StackPanel Height="75" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Width="750">
-				<Button Name="Display" Content="NO CONNECTION" IsEnabled="False" Width="150"></Button>
+				<Button Name="ConnectButton" Content="CONNECT" IsEnabled="True" Width="150" Click="ConnectButton_Click"></Button>
 				<Button Width="75" IsEnabled="False"/>
 				<Button Name="C_CYYZ_N_TWR" Width="75" IsEnabled="False">
 					<TextBlock TextAlignment="Center">CYYZ<LineBreak/>N TWR</TextBlock>
